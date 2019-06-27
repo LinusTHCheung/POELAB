@@ -7,6 +7,16 @@ client.on("ready", () => {
     console.log(`${client.user.username} is online`);
 });
 
+client.on('message', message => {
+
+    if (message.content === 'ping') {
+
+       message.reply('pong');
+
+       }
+
+});
+
 //create web browser
 (async () => {
     browser = await puppeteer.launch({

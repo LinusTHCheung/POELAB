@@ -1,16 +1,19 @@
 const Discord = require("discord.js");
 const puppeteer = require("puppeteer");
-const {prefix, token, w, h} = require("./config.json");
+const {prefix, w, h} = require("./config.json");
 const client = new Discord.Client();
 
+//on client successful build
 client.on("ready", () => { 
-    console.log(`${client.user.username} is online`);
+    console.log(`${client.user.username} is online`),
+    client.user.setPresence({ status: 'online', game: { name: 'Need help? | #help' } });   ;
 });
 
+//set date
 const getDate = async () => {
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); 
     var yyyy = today.getFullYear();
 
     today = dd + '/' + mm + '/' + yyyy;
@@ -33,7 +36,7 @@ const getDate = async () => {
 })();
 
 //scraping function
-const scrape = async () => {
+const scrapeUber = async () => {
     const page = await browser.newPage();
     await page.setJavaScriptEnabled(false);
     await page.setViewport({
@@ -59,12 +62,11 @@ const scrape = async () => {
 }
 
 client.on("message", async message => {
-    console.log(message.content);
     try {
         if (message.content.startsWith(`${prefix}uber`)) {
             var date = await getDate();
-            const values = await scrape();
-            message.channel.send(`Here is today's uber for ${date}\n${values} `);
+            const values = await scrapeUber();
+            message.channel.send(`Here is todays uber for ${date}\n${values} `);
         }
     }catch (err){
     console.error("Error has occured")
@@ -72,4 +74,15 @@ client.on("message", async message => {
 
 })
 
-client.login(process.env.BOT_TOKEN); 
+client.on("message", async message => {
+    try {
+        if (message.content.startsWith(`${prefix}help`)) {
+            message.channel.send("```#help - Help\n#uber - Show the current uber lab layout```");
+        }
+    }catch (err){
+    console.error("Error has occured")
+    }
+
+})
+
+client.login("process.env.BOT_TOKEN"); 

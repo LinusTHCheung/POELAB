@@ -1,7 +1,7 @@
-# POELABJS
+# POELAB
 
-A bot that scrapes the current lab layout from https://www.poelab.com/
+A bot that scrapes the current lab layout from https://www.poelab.com/. Credit goes to SuitSizeSmall for running the lab.
 
 ## How it works
 
-This project uses the puppeteer library to take automatically browse the website. It will load up a page of a headless chromium and take the src tag of the image and screenshot it. Also uses discord.js library.
+This project uses the puppeteer library to automatically navigate to poelab. It will load up the uber page in headless chromium and take the src attribute link of the image and send it in chat. Also uses discord.js library.

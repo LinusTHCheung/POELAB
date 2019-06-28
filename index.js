@@ -7,20 +7,22 @@ client.on("ready", () => {
     console.log(`${client.user.username} is online`);
 });
 
-client.on('message', message => {
+const getDate = async () => {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
 
-    if (message.content === 'ping') {
+    today = dd + '/' + mm + '/' + yyyy;
 
-       message.reply('pong');
-
-       }
-
-});
+    return today;
+}
 
 //create web browser
 (async () => {
     browser = await puppeteer.launch({
         headless: true,
+        handleSIGHUP: true,
         args: [
             '--window-size=1980,1080',
             '--no-sandbox', 
@@ -45,30 +47,29 @@ const scrape = async () => {
     height: h
     });
 
-    const png = await page.$('#notesImg');
-    const screenshot = await png.screenshot({ type: png});
+    await page.waitForSelector('#notesImg');
+    const getImgSrc = await page.$eval('#notesImg', img => img.getAttribute('src'));
+    console.log(getImgSrc);
 
-    return screenshot;
+    //const png = await page.$('#notesImg');
+    //const screenshot = await png.screenshot({type: 'png'});
 
-    await page.close();
+    return getImgSrc;
+
 }
 
-
-
 client.on("message", async message => {
-    //console.log(message.content);
+    console.log(message.content);
     try {
         if (message.content.startsWith(`${prefix}uber`)) {
-            const screenshot = await scrape();
-            message.channel.send("Here is today's uber", {file: screenshot});
-            message.channel.send("The link is https://www.poelab.com/wfbra")
+            var date = await getDate();
+            const values = await scrape();
+            message.channel.send(`Here is today's uber for ${date}\n${values} `);
         }
+    }catch (err){
+    console.error("Error has occured")
     }
-    catch {
-        console.error(error);
-        message.channel.send(error.message)
-    }
-        
+
 })
 
-client.login(process.env.BOT_TOKEN);
+client.login(process.env.BOT_TOKEN); 

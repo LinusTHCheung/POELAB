@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const puppeteer = require("puppeteer");
-const {prefix, w, h} = require("./config.json");
+const {prefix,  w, h} = require("./config.json");
 const client = new Discord.Client();
 
 //on client successful build
@@ -85,4 +85,4 @@ client.on("message", async message => {
 
 })
 
-client.login("process.env.BOT_TOKEN"); 
+client.login(process.env.BOT_TOKEN); 

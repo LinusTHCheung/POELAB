@@ -21,6 +21,7 @@ const getDate = async () => {
     return today;
 }
 
+
 //create web browser
 (async () => {
     browser = await puppeteer.launch({

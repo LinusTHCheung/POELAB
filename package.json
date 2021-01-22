@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "discord.js": "^11.5.1",
+    "mangadex-full-api": "^3.10.0",
     "puppeteer": "^1.18.1"
   }
 }

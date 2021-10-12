@@ -8,7 +8,7 @@ mdapi.agent.domainOverride = "https://mangadex.org/";
 //on client successful build
 client.on("ready", () => { 
     console.log(`${client.user.username} is online`),
-    client.user.setPresence({ status: 'online', game: { name: 'with DN' } });   
+    client.user.setPresence({ status: 'online', game: { name: 'with cum' } });   
     /* client.user.setPresence({ status: 'online', game: { name: 'Need help? | #help' } });   ; */
 });
 
